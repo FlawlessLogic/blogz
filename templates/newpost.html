@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/">Home Page</a>
+<hr>
+<h1>NEW BLOG</h1>
+<form method="post" action='/newpost'>
+<label>Blog Title: 
+    <input type="text" name="title"/>
+</label>
+<p>{{title_error}}</p>
+<label>Blog:
+    <input type="text" name="body"/>
+</label>
+<p>{{body_error}}</p>
+<input type="submit" value="Add Blog Post"/>
+</form>
+
+{% endblock %}
