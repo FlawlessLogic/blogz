@@ -7,7 +7,7 @@
         {% else %}
             {% for blog in blog_list %}
                 <div>
-                    <a href="/blogpost?={{blog.id}}"><h3>{{blog.title}}</h3></a><br>{{blog.body}}</div>
+                    <a href="/blogpost?id={{blog.id}}"><h3>{{blog.title}}</h3></a><br>{{blog.body}}</div>
                 <hr/>
                 {% endfor %}
 

@@ -19,13 +19,13 @@ class Blog(db.Model):
         self.title = title
         self.body = body
         
-def blog_list():
-    return Blog.query.all()
+#def blog_list():
+#    return Blog.query.all()
 
-@app.route('/', methods=['post', 'get'])
+@app.route('/', methods=['GET'])
 def index():
-    
-    return render_template('blog.html', head="Blogz!", blog_list=blog_list() )
+    blog_list = (reversed(Blog.query.all()))
+    return render_template('blog.html', head="Blogz!", blog_list=blog_list )
 
 
 @app.route('/newpost', methods=['POST', 'GET'])
@@ -48,16 +48,19 @@ def newblog():
             blog = Blog(title, body)
             db.session.add(blog)
             db.session.commit()
-            return redirect('/blogpost?id={0}'.format(blog.id))
+            blog_id = str(blog.id)    
+            return redirect('/blogpost?id='+blog_id)
     
     return render_template('newpost.html', title=title, head="New Blog",
     body=body, title_error=title_error, body_error=body_error)
 
 
-@app.route('/blogpost', methods=['GET', 'POST'])
+@app.route('/blogpost', methods=['GET'])
 def blogpost():
-    blog_id = request.args.get('id')
-    blog = db.session.query(Blog).filter(Blog.id == blog_id).first()
+    id = request.args['id']
+    #return id
+    blog = Blog.query.filter_by(id=id).first()
+    #blog = db.session.query(Blog).filter(Blog.id == id).first()
     return render_template('blogpost.html', head="Blog Post!", blog=blog)
 
 if __name__ == '__main__':
