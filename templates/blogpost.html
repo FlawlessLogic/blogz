@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<a href="/newpost">New Blog Post</a>
-<a href="/">Home Page</a>
 
-<h3>{{blog.title}}</h3><br>{{blog.body}}
+    <div>
+        <a href="/blogpost?id={{blog.id}}"><h3>{{blog.title}}</h3></a>
+        <br>{{blog.body}}
+        <br>
+        <h6><i>This post was written by <a href="/blog?name={{blog.owner.id}}">{{blog.owner.name}}</a></i></h6>
+    </div>
 
 {% endblock %}
