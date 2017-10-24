@@ -34,17 +34,20 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup', 'blog', 'index']
-    if request.endpoint not in allowed_routes and 'name' not in session:
+    disallowed_routes = ['newpost']
+    if request.endpoint in disallowed_routes and 'name' not in session:
         return redirect('/login')
 
-@app.route('/blog', methods=['GET'])
+@app.route('/UserBlog', methods=['GET'])
 def blog():
     name = request.args['name']
-    #if name is None:
-    #    blogset = reversed(Blog.query.all())
-    #else:
     blogset = Blog.query.filter_by(owner_id=name)
+    
+    return render_template('blog.html', head="Blogz!", blogset=blogset )
+
+@app.route('/allposts', methods=['GET'])
+def allposts():
+    blogset = reversed(Blog.query.all())
     return render_template('blog.html', head="Blogz!", blogset=blogset )
 
 @app.route('/signup', methods=['GET', 'POST'])
